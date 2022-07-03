@@ -47,4 +47,3 @@ for i, link in enumerate( links ):
 with open( "data.json", "w" ) as file:
     file.write( json.dumps( movies ) )
 
-print( len( movies ) )
