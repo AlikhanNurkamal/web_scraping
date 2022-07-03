@@ -44,6 +44,10 @@ for i, link in enumerate( links ):
 
     movies.append( one_movie )
 
-with open( "data.json", "w" ) as file:
-    file.write( json.dumps( movies ) )
+# First way
+# with open( "data.json", "w", encoding = "utf-8" ) as file:
+#     file.write( json.dumps( movies ) )
 
+# Second way
+with open( "data.json", "w", encoding = "utf-8" ) as file:
+    json.dump( movies, file, ensure_ascii = False, indent = 4 )
