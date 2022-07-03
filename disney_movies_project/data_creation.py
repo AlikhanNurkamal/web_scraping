@@ -20,7 +20,8 @@ tables = tables[:-2] # I do not need the last 2 tables.
 links = []
 for table in tables:
     for i in table.find_all( "i" ):
-        if i.a is not None:
+        if i.a is not None: # There is some italic data that does not have a link, so I
+                            # need to check it for None
             links.append( i.a.get( "href" ) )
 
 url = "http://en.wikipedia.org"
