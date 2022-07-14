@@ -21,7 +21,11 @@ for i in range( len( links ) ):
     soup = BeautifulSoup( page, "html.parser" )
 
     table = soup.find( name = "table", class_ = "znaki" ).tbody
-    for image in table.find_all( "img" ):
+    for col in table.find_all( "th", class_ = "col_1" ):
+        if col.img is None:
+            continue
+        image = col.img
+        # print( image["src"] )
         images.append( image["src"] )
 
     for col in table.find_all( "th", class_ = ["col_2", "col_2 rowspan"] ):
