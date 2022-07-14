@@ -36,15 +36,13 @@ print( "Downloading images..." )
 for i, image_link in enumerate( images ):
     url = main_url + image_link
     response = requests.get( url )
-    image_name = "data/" + "img" + str( i + 1 ) + ".png"
+    image_name = "data/" + "img_" + str( i ) + ".png"
     with open( image_name, "wb" ) as file:
         file.write( response.content )
 
 print( "Download successful!" )
 
 print( "Setting labels..." )
-with open( "classes.csv", "w" ) as file:
-    file.write( ','.join( str( i ) for i in range( len( labels ) ) ) )
 
 with open( "labels.txt", "w", encoding = "utf8" ) as file:
     file.write( ','.join( labels_final ) )
