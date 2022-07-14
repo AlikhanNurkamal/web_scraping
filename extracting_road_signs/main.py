@@ -12,7 +12,9 @@ links = [i["href"] for i in all_links]
 
 main_url = "http://zarul.kz/"
 images = []
+labels = []
 
+print( "Getting images links and labels names..." )
 for i in range( len( links ) ):
     url = main_url + links[i]
     page = requests.get( url ).text
@@ -22,8 +24,15 @@ for i in range( len( links ) ):
     for image in table.find_all( "img" ):
         images.append( image["src"] )
 
-# print( images )
+    for col in table.find_all( "th", class_ = ["col_2", "col_2 rowspan"] ):
+        labels.append( col.p.text )
 
+# print( images )
+# print( labels )
+# Some labels contain '\xa0' characters, so I need to delete them.
+labels_final = [string.replace( '\xa0', ' ' ).replace( '«', '"' ).replace( '»', '"' ) for string in labels]
+
+print( "Downloading images..." )
 for i, image_link in enumerate( images ):
     url = main_url + image_link
     response = requests.get( url )
@@ -31,4 +40,13 @@ for i, image_link in enumerate( images ):
     with open( image_name, "wb" ) as file:
         file.write( response.content )
 
-print( "Images are downloaded!" )
+print( "Download successful!" )
+
+print( "Setting labels..." )
+with open( "classes.csv", "w" ) as file:
+    file.write( ','.join( str( i ) for i in range( len( labels ) ) ) )
+
+with open( "labels.txt", "w", encoding = "utf8" ) as file:
+    file.write( ','.join( labels_final ) )
+
+print( "Everything complete!" )
